@@ -7,3 +7,13 @@ SPDX-License-Identifier: MPL-2.0
 # Changelog
 
 ## Unreleased
+
+Initial release.
+
+### Added
+
+- `withUtf8StdHandles`
+- `openFile`
+- `withFile`
+- `readFile`
+- `writeFile`
