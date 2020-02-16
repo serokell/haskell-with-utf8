@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2020 Serokell <https://serokell.io/>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+name: utf8
+version: 0.0.0
+synopsis: Get your UTF-8 IO right on the first try
+
+author: Kirill Elagin <kirelagin@serokell.io>
+copyright: 2020 Serokell
+license-file: LICENSES/MPL-2.0.txt
+
+github: serokell/haskell-utf8
+
+extra-doc-files:
+  - CHANGELOG.md
+  - README.md
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wredundant-constraints
+
+library:
+  source-dirs: lib
+
+  dependencies:
+    - base

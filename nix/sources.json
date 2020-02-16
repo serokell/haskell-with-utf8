@@ -1,0 +1,14 @@
+{
+    "nixpkgs": {
+        "branch": "master",
+        "description": "Pinned Nixpkgs tree (master follows nixos-unstable-small, only tags have stable history)",
+        "homepage": "",
+        "owner": "serokell",
+        "repo": "nixpkgs",
+        "rev": "17d9bc51f6cbc37339332e9bf9e82d172c642e7c",
+        "sha256": "0ckvgiif2xwbrl0sd301p4nldkc3y7qpvrvag9pykswsissbhi5v",
+        "type": "tarball",
+        "url": "https://github.com/serokell/nixpkgs/archive/17d9bc51f6cbc37339332e9bf9e82d172c642e7c.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
