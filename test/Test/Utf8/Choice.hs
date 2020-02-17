@@ -17,7 +17,7 @@ import System.IO.Utf8.Internal (EncodingAction (..), chooseBestEnc, chooseBestEn
 
 import qualified System.IO.Utf8 as Utf8
 
-import Test.Util (withStdoutIn, withTmpFileIn)
+import Test.Util (withTerminalIn, withTmpFileIn)
 
 
 -- | Compare @chooseBestEnc@ with @chooseBestEncPure@ on the handle.
@@ -65,14 +65,14 @@ unit_pure_idempotent =
   Nothing @=? chooseBestEncPure True (Just "ASCII//TRANSLIT")
 
 
-unit_stdout_utf8 :: Assertion
-unit_stdout_utf8 = withStdoutIn utf8 verifyOn
+unit_term_utf8 :: Assertion
+unit_term_utf8 = withTerminalIn utf8 verifyOn
 
-unit_stdout_char8 :: Assertion
-unit_stdout_char8 = withStdoutIn char8 verifyOn
+unit_term_char8 :: Assertion
+unit_term_char8 = withTerminalIn char8 verifyOn
 
-unit_stdout_latin1 :: Assertion
-unit_stdout_latin1 = withStdoutIn latin1 verifyOn
+unit_term_latin1 :: Assertion
+unit_term_latin1 = withTerminalIn latin1 verifyOn
 
 
 unit_file_binary :: Assertion
@@ -89,8 +89,8 @@ unit_file_char8 = withTmpFileIn char8 verifyOn
 unit_file_latin1 :: Assertion
 unit_file_latin1 = withTmpFileIn latin1 verifyOn
 
-unit_stdout_idempotent :: Assertion
-unit_stdout_idempotent = withStdoutIn char8 $ \h -> do
+unit_term_idempotent :: Assertion
+unit_term_idempotent = withTerminalIn char8 $ \h -> do
   Just enc <- IO.hGetEncoding h
   "ISO-8859-1" @=? textEncodingName enc  -- sanity check
   Utf8.hWithEncoding h $ do

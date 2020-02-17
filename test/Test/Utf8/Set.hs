@@ -43,14 +43,14 @@ verifyOn h = do
 --      no way to check that the newly set encoding is transliterating
 --      (see the comment in @chooseBestEnc@).
 
--- unit_stdout_utf8 :: Assertion
--- unit_stdout_utf8 = withStdoutIn utf8 verifyOn
+-- unit_term_utf8 :: Assertion
+-- unit_term_utf8 = withTerminalIn utf8 verifyOn
 --
--- unit_stdout_char8 :: Assertion
--- unit_stdout_char8 = withStdoutIn char8 verifyOn
+-- unit_term_char8 :: Assertion
+-- unit_term_char8 = withTerminalIn char8 verifyOn
 --
--- unit_stdout_latin1 :: Assertion
--- unit_stdout_latin1 = withStdoutIn latin1 verifyOn
+-- unit_term_latin1 :: Assertion
+-- unit_term_latin1 = withTerminalIn latin1 verifyOn
 
 
 unit_file_utf8 :: Assertion

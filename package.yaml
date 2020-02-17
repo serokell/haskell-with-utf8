@@ -44,6 +44,7 @@ tests:
       - safe-exceptions
       - temporary
       - text
+      - unix
 
       - hedgehog
       - HUnit
