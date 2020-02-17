@@ -36,7 +36,7 @@ data EncodingAction
   | ChangeFromTo TextEncoding String
     -- ^ Change the first encoding to the second.
 
--- | Pure version of 'chooseBestUtf8Enc'.
+-- | Pure version of 'chooseBestEnc'.
 --
 -- This function is not actually used in the library. It exists only
 -- for documentation purposes to demonstrate the logic.
@@ -68,15 +68,19 @@ chooseBestEncPure True (Just name)
 --    (e.g. to be able to restore it), so we avoid repeating the query.
 -- 2. It first checks for the cases where it doesn't care whether the device
 --    is a terminal or not, so the query will be made only if really necessary.
-chooseBestEnc :: IO.Handle -> Maybe TextEncoding -> IO EncodingAction
-chooseBestEnc _ Nothing = pure Keep
-chooseBestEnc h (Just enc) = case textEncodingName enc of
+chooseBestEnc
+  :: IO.Handle  -- ^ Handle to choose encoding for
+  -> (IO.Handle -> IO Bool)  -- ^ @hIsTerminalDevice@
+  -> Maybe TextEncoding  -- ^ Current encoding.
+  -> IO EncodingAction
+chooseBestEnc _ _ Nothing = pure Keep
+chooseBestEnc h hIsTerm (Just enc) = case textEncodingName enc of
   "UTF-8" -> pure Keep
   name
     -- XXX: The first branch is actually never used, because the encoding
     --      loses the @//TRANSLIT@ suffix after it is being created.
     -- TODO: Find a way to detect that the encoding is already trasliterating.
     | "//TRANSLIT" `isSuffixOf` name -> pure Keep
-    | otherwise -> IO.hIsTerminalDevice h >>= \case
+    | otherwise -> hIsTerm h >>= \case
         False -> pure $ ChangeFromTo enc (textEncodingName utf8)
         True -> pure $ ChangeFromTo enc (name ++ "//TRANSLIT")

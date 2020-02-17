@@ -24,12 +24,12 @@ import qualified System.IO as IO
 import qualified System.IO.Utf8 as Utf8
 
 
--- | Like @readFile@, but assumes the file is encoded in UTF-8, regardless
+-- | Like 'T.readFile', but assumes the file is encoded in UTF-8, regardless
 -- of the current locale.
 readFile :: MonadIO m => IO.FilePath -> m Text
 readFile path = Utf8.openFile path IO.ReadMode >>= liftIO . T.hGetContents
 
--- | Like @writeFile@, but encodes the data in UTF-8, regardless
+-- | Like 'T.writeFile', but encodes the data in UTF-8, regardless
 -- of the current locale.
 writeFile :: (MonadIO m, MonadMask m) => IO.FilePath -> Text -> m ()
 writeFile path = Utf8.withFile path IO.WriteMode . (liftIO .) . flip T.hPutStr

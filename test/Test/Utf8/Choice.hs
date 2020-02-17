@@ -13,6 +13,7 @@ import qualified System.IO as IO
 import Test.HUnit (Assertion, assertFailure)
 import Test.Tasty.HUnit ((@=?))
 
+import System.IO (hIsTerminalDevice)
 import System.IO.Utf8.Internal (EncodingAction (..), chooseBestEnc, chooseBestEncPure)
 
 import qualified System.IO.Utf8 as Utf8
@@ -27,7 +28,7 @@ verifyOn h = do
   enc <- IO.hGetEncoding h
 
   let pureResult = chooseBestEncPure isTerm (textEncodingName <$> enc)
-  realResult <- chooseBestEnc h enc
+  realResult <- chooseBestEnc h hIsTerminalDevice enc
 
   case (pureResult, realResult) of
     (Nothing, Keep) -> pure ()
@@ -98,7 +99,7 @@ unit_term_idempotent :: Assertion
 unit_term_idempotent = withTerminalIn char8 $ \h -> do
   Just enc <- IO.hGetEncoding h
   "ISO-8859-1" @=? textEncodingName enc  -- sanity check
-  Utf8.hWithEncoding h $ do
+  Utf8.withHandle h $ do
     -- XXX: Actually not true, there is no suffix in the name
     -- Just enc' <- IO.hGetEncoding h
     -- "ISO-8859-1//TRANSLIT" @=? textEncodingName enc'  -- sanity check
