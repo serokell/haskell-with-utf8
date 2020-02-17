@@ -28,3 +28,28 @@ library:
 
   dependencies:
     - base
+    - safe-exceptions  # only really needed for polymorphic bracket
+    - text
+
+tests:
+  utf8-test:
+    source-dirs: test
+    main: Test.hs
+
+    dependencies:
+      - utf8
+
+      - base
+      - deepseq
+      - safe-exceptions
+      - temporary
+      - text
+
+      - hedgehog
+      - HUnit
+      - tasty
+      - tasty-hedgehog
+      - tasty-hunit
+
+    build-tools:
+      - tasty-discover:tasty-discover
