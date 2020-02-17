@@ -24,6 +24,7 @@ module System.IO.Utf8
   ( withUtf8StdHandles
 
   , hSetEncoding
+  , hWithEncoding
 
   , openFile
   , withFile
@@ -66,13 +67,10 @@ hSetBestUtf8Enc h = liftIO $ IO.hGetEncoding h >>= \case
 -- After the action finishes, restores the original encodings.
 withUtf8StdHandles :: IO a -> IO a
 withUtf8StdHandles action =
-    withConfiguredHandle stdin $
-    withConfiguredHandle stdout $
-    withConfiguredHandle stderr $
+    hWithEncoding stdin $
+    hWithEncoding stdout $
+    hWithEncoding stderr $
       action
-  where
-    withConfiguredHandle :: IO.Handle -> IO a -> IO a
-    withConfiguredHandle h = bracket (hSetBestUtf8Enc h) ($ h) . const
 
 
 -- | Set handle encoding to the best possible.
@@ -92,6 +90,13 @@ withUtf8StdHandles action =
 -- which will restore the previous encoding when you are done.
 hSetEncoding :: MonadIO m => IO.Handle -> m ()
 hSetEncoding = liftIO . void . hSetBestUtf8Enc
+
+-- | Temporarily set handle encoding to the best possible.
+--
+-- This is like 'hSetEncoding', but it will restore the encoding
+-- to the previous one when the action is done.
+hWithEncoding :: (MonadIO m, MonadMask m) => IO.Handle -> m r -> m r
+hWithEncoding h = bracket (hSetBestUtf8Enc h) ($ h) . const
 
 
 -- | Like @openFile@, but sets the file encoding to UTF-8, regardless

@@ -57,17 +57,16 @@ All these functions will make sure that the content will be treated as if it
 was encoded in UTF-8 (it is 2020, what else can it be encoded in?).
 
 If, for some reason, you really need to use `withFile`/`openFile` from `base`,
-just call `hSetEncoding h`, where `h` is your handle and `hSetEncoding` comes
-from `System.IO.Utf8` for your convenience:
+or you got your file handle from somewhere else, wrap the code that works
+with it in a call to `hWithEncoding` from `System.IO.Utf8`:
 
 ```haskell
 import qualified System.IO as IO
 import qualified System.IO.Utf8 as Utf8
 
-doSomethingWithAFile :: IO ()
-doSomethingWithAFile = IO.withFile "file.txt" IO.ReadMode $ \h -> do
-  Utf8.hSetEncoding h
-  {- ... work with the file ... -}
+doSomethingWithAFile :: IO.Handle -> IO ()
+doSomethingWithAFile h = Utf8.hWithEncoding h $ do
+    {- ... work with the file ... -}
 ```
 
 ### Step 4: Write files using UTF-8

@@ -14,6 +14,7 @@ Initial release.
 
 - `withUtf8StdHandles`
 - `hSetEncoding`
+- `hWithEncoding`
 - `openFile`
 - `withFile`
 - `readFile`
