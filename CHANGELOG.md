@@ -13,6 +13,7 @@ Initial release.
 ### Added
 
 - `withUtf8StdHandles`
+- `hSetEncoding`
 - `openFile`
 - `withFile`
 - `readFile`
