@@ -4,7 +4,6 @@
  -}
 
 {-# LANGUAGE LambdaCase   #-}
-{-# LANGUAGE ViewPatterns #-}
 
 -- | System IO for the modern world.
 --
@@ -33,15 +32,17 @@ module System.IO.Utf8
 import Control.Exception.Safe (MonadMask, bracket)
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Data.Functor (void)
-import GHC.IO.Encoding (mkTextEncoding, textEncodingName, utf8)
+import GHC.IO.Encoding (mkTextEncoding)
 import System.IO (stderr, stdin, stdout)
 
 import qualified System.IO as IO
 
+import System.IO.Utf8.Internal (EncodingAction (..), chooseBestEnc)
+
 
 type EncRestoreAction m = IO.Handle -> m ()
 
--- | Sets the best available UTF-8-compatible encoding for the handle.
+-- | Set the best available UTF-8-compatible encoding for the handle.
 -- Returns the action that will restore the previous one.
 --
 -- If the handle is in binary mode, does nothing.
@@ -49,18 +50,12 @@ type EncRestoreAction m = IO.Handle -> m ()
 -- Otherwise, keeps its current encoding, but augments it to transliterate
 -- unsupported characters.
 hSetBestUtf8Enc :: MonadIO m => IO.Handle -> m (EncRestoreAction m)
-hSetBestUtf8Enc h = liftIO $ IO.hGetEncoding h >>= \case
-    Nothing -> pure (\_ -> pure ())
-    Just enc -> do
-      isTerm <- IO.hIsTerminalDevice h
-      enc' <- chooseBestEnc isTerm enc
-      IO.hSetEncoding h enc'
-      pure $ liftIO . flip IO.hSetEncoding enc
-  where
-    chooseBestEnc False _ = pure utf8
-    chooseBestEnc True enc@(textEncodingName -> name)
-      | '/' `notElem` name = mkTextEncoding (name ++ "//TRANSLIT")
-      | otherwise = pure enc
+hSetBestUtf8Enc h = liftIO $ do
+    IO.hGetEncoding h >>= chooseBestEnc h >>= \case
+      Keep -> pure (\_ -> pure ())
+      ChangeFromTo enc newName -> do
+        mkTextEncoding newName >>= IO.hSetEncoding h
+        pure $ liftIO . flip IO.hSetEncoding enc
 
 -- | Configures the encodings of the three standard handles (stdin, stdout, stderr)
 -- to work with UTF-8 encoded data and runs the specified IO action.
