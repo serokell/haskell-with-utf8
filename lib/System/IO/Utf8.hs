@@ -31,13 +31,14 @@ module System.IO.Utf8
 
 import Control.Exception.Safe (MonadMask, bracket)
 import Control.Monad.IO.Class (MonadIO, liftIO)
+import Data.Functor (void)
 import GHC.IO.Encoding (mkTextEncoding, textEncodingName, utf8)
 import System.IO (stderr, stdin, stdout)
 
 import qualified System.IO as IO
 
 
-type EncRestoreAction = IO.Handle -> IO ()
+type EncRestoreAction m = IO.Handle -> m ()
 
 -- | Sets the best available UTF-8-compatible encoding for the handle.
 -- Returns the action that will restore the previous one.
@@ -46,14 +47,14 @@ type EncRestoreAction = IO.Handle -> IO ()
 -- If the handle is not attached to a terminal, sets UTF-8.
 -- Otherwise, keeps its current encoding, but augments it to transliterate
 -- unsupported characters.
-hSetBestUtf8Enc :: IO.Handle -> IO EncRestoreAction
-hSetBestUtf8Enc h = IO.hGetEncoding h >>= \case
+hSetBestUtf8Enc :: MonadIO m => IO.Handle -> m (EncRestoreAction m)
+hSetBestUtf8Enc h = liftIO $ IO.hGetEncoding h >>= \case
     Nothing -> pure (\_ -> pure ())
     Just enc -> do
       isTerm <- IO.hIsTerminalDevice h
       enc' <- chooseBestEnc isTerm enc
       IO.hSetEncoding h enc'
-      pure $ flip IO.hSetEncoding enc
+      pure $ liftIO . flip IO.hSetEncoding enc
   where
     chooseBestEnc False _ = pure utf8
     chooseBestEnc True enc@(textEncodingName -> name)
@@ -74,13 +75,23 @@ withUtf8StdHandles action =
     withConfiguredHandle h = bracket (hSetBestUtf8Enc h) ($ h) . const
 
 
--- | A shortucut for setting handle encoding to UTF-8.
+-- | Set handle encoding to the best possible.
 --
--- @
---   hSetEncoding h = System.IO.hSetEncoding h GHC.IO.Endoding.utf8
--- @
+-- It is safe to call this function on any kind of handle whatsoever.
+--
+--   * If the handle is in binary mode, it will do nothing.
+--   * If the handle is a terminal, it will use the same encoding, but switch
+--     it to Unicode approximation mode so it won't throw errors on invalid
+--     byte sequences, but instead try to approximate unecodable characters
+--     with visually similar encodable ones.
+--   * For regular files it will always choose UTF-8, of course.
+--
+-- You probably shouldn't be using this function. If you open the file
+-- yourself, use 'openFile' (or, even better, 'withFile') instead.
+-- If you get the handle from somewhere else, use 'hWithEncoding',
+-- which will restore the previous encoding when you are done.
 hSetEncoding :: MonadIO m => IO.Handle -> m ()
-hSetEncoding = liftIO . flip IO.hSetEncoding utf8
+hSetEncoding = liftIO . void . hSetBestUtf8Enc
 
 
 -- | Like @openFile@, but sets the file encoding to UTF-8, regardless
