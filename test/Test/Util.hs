@@ -5,24 +5,30 @@
 
 -- | Testing helpers.
 module Test.Util
-  ( withStdoutIn
+  ( withTerminalIn
   , withTmpFileIn
   ) where
 
-import Control.Exception.Safe (bracket)
+import Control.Exception.Safe (bracket, finally)
+import Control.Monad (void)
 import GHC.IO.Encoding (TextEncoding)
-import GHC.IO.Handle (hDuplicate)
 import System.IO.Temp (withSystemTempFile)
+import System.Posix.IO (closeFd, fdToHandle, handleToFd)
+import System.Posix.Terminal (openPseudoTerminal)
 
 import qualified System.IO as IO
 
 
--- | Make a duplicate of @stdout@ with the given encoding.
-withStdoutIn :: TextEncoding -> (IO.Handle -> IO r) -> IO r
-withStdoutIn enc act = bracket
-  (hDuplicate IO.stdout)
-  IO.hClose
-  (\h -> IO.hSetEncoding h enc *> act h)
+-- | Make a new pseudo-terminal with the given encoding.
+withTerminalIn :: TextEncoding -> (IO.Handle -> IO r) -> IO r
+withTerminalIn enc act = bracket
+    openPseudoTerminal
+    (\(fd1, fd2) -> closeFd fd2 `finally` closeFd fd1)
+    (\(fd, _) -> bracket
+      (fdToHandle fd)
+      (void . handleToFd)  -- just release the fd from the handle
+      (\h -> IO.hSetEncoding h enc *> act h)
+    )
 
 -- | Make a temp file with the given encoding.
 withTmpFileIn :: TextEncoding -> (IO.Handle -> IO r) -> IO r
