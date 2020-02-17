@@ -65,6 +65,11 @@ unit_pure_idempotent =
   Nothing @=? chooseBestEncPure True (Just "ASCII//TRANSLIT")
 
 
+unit_term_binary :: Assertion
+unit_term_binary = withTerminalIn utf8 $ \h -> do
+  IO.hSetBinaryMode h True
+  verifyOn h
+
 unit_term_utf8 :: Assertion
 unit_term_utf8 = withTerminalIn utf8 verifyOn
 
