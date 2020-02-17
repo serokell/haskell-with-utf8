@@ -29,8 +29,6 @@ import qualified System.IO.Utf8 as Utf8
 import qualified Hedgehog.Gen as G
 import qualified Hedgehog.Range as R
 
--- Import MonadMask instance for Hedgehog Property
-import Test.Util.Hedgehog ()
 
 -- | Helper that writes Text to a temp file.
 withTestFile :: (MonadIO m, MonadMask m) => Text -> (FilePath -> m r) -> m r
