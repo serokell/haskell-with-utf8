@@ -6,7 +6,7 @@
 {-# LANGUAGE LambdaCase   #-}
 {-# LANGUAGE ViewPatterns #-}
 
--- | Internal functiona that implement encoding selection logic.
+-- | Internal functions that implement encoding selection logic.
 module System.IO.Utf8.Internal
   ( EncodingAction (..)
 
@@ -43,8 +43,8 @@ data EncodingAction
 -- It is also used in tests to verify that the logic implemented is
 -- indeed this.
 chooseBestEncPure
-  :: Bool  -- ^ Is a terminal device.
-  -> Maybe String  -- ^ Previous encoding name
+  :: Bool  -- ^ Is a terminal device?
+  -> Maybe String  -- ^ Previous encoding name.
   -> Maybe String
 -- Never touch handles in binary mode.
 chooseBestEncPure _ Nothing = Nothing
@@ -69,8 +69,8 @@ chooseBestEncPure True (Just name)
 -- 2. It first checks for the cases where it doesn't care whether the device
 --    is a terminal or not, so the query will be made only if really necessary.
 chooseBestEnc
-  :: IO.Handle  -- ^ Handle to choose encoding for
-  -> (IO.Handle -> IO Bool)  -- ^ @hIsTerminalDevice@
+  :: IO.Handle  -- ^ Handle to choose encoding for.
+  -> (IO.Handle -> IO Bool)  -- ^ hIsTerminalDevice.
   -> Maybe TextEncoding  -- ^ Current encoding.
   -> IO EncodingAction
 chooseBestEnc _ _ Nothing = pure Keep
