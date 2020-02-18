@@ -15,6 +15,7 @@ import Control.Exception.Safe (MonadMask, try)
 import Control.Monad ((>=>))
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Data.Text (Text)
+import GHC.IO.Encoding (utf8)
 import System.IO (FilePath)
 import System.IO.Temp (withSystemTempFile)
 
@@ -33,9 +34,7 @@ import qualified Hedgehog.Range as R
 -- | Helper that writes Text to a temp file.
 withTestFile :: (MonadIO m, MonadMask m) => Text -> (FilePath -> m r) -> m r
 withTestFile t act = withSystemTempFile "utf8.txt" $ \fp h -> do
-    Utf8.hSetEncoding h
-    liftIO $ T.hPutStr h t
-    liftIO $ IO.hClose h
+    liftIO $ IO.hSetEncoding h utf8 *> T.hPutStr h t *> IO.hClose h
     act fp
 
 

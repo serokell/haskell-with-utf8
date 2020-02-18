@@ -12,9 +12,12 @@ Initial release.
 
 ### Added
 
-- `withUtf8StdHandles`
-- `hSetEncoding`
-- `hWithEncoding`
+- `withUtf8`
+- `withStdTerminalHandles`
+- `setHandleEncoding`
+- `withHandle`
+- `setTerminalHandleEncoding`
+- `withTerminalHandle`
 - `openFile`
 - `withFile`
 - `readFile`

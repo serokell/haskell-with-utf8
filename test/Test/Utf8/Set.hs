@@ -12,6 +12,7 @@ import qualified System.IO as IO
 import Test.HUnit (Assertion)
 import Test.Tasty.HUnit ((@=?))
 
+import System.IO (hIsTerminalDevice)
 import System.IO.Utf8.Internal (EncodingAction (..), chooseBestEnc)
 
 import qualified System.IO.Utf8 as Utf8
@@ -23,9 +24,9 @@ import Test.Util (withTmpFileIn)
 verifyOn :: IO.Handle -> Assertion
 verifyOn h = do
   menc <- IO.hGetEncoding h
-  act <- chooseBestEnc h menc
+  act <- chooseBestEnc h hIsTerminalDevice menc
 
-  Utf8.hWithEncoding h $ do
+  Utf8.withHandle h $ do
     menc' <- IO.hGetEncoding h
     case act of
       Keep ->
