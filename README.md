@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2020 Serokell <https://serokell.io/>
-
-SPDX-License-Identifier: MPL-2.0
--->
-
 # utf8 _(haskell-utf8)_
 
 Get your IO right on the first try.
