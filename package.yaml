@@ -17,6 +17,7 @@ description: |
 
   See <https://serokell.io/blog/haskell-utf8 this blog post> for why this
   library exists and what exactly it does.
+category: IO
 
 author: Kirill Elagin <kirelagin@serokell.io>
 copyright: 2020 Serokell
@@ -39,9 +40,9 @@ library:
   source-dirs: lib
 
   dependencies:
-    - base
-    - safe-exceptions  # only really needed for polymorphic bracket
-    - text
+    - base ^>= 4.12
+    - safe-exceptions >= 0.1  # only really needed for polymorphic bracket
+    - text >= 0.7
 
 tests:
   utf8-test:
