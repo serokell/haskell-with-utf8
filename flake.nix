@@ -15,19 +15,19 @@
 
       project = pkgs.haskell-nix.stackProject {
         src = pkgs.haskell-nix.haskellLib.cleanGit {
-          name = "haskell-utf8";
+          name = "with-utf8";
           src = ./.;
         };
       };
-      utf8 = project.utf8;
+      with-utf8 = project.with-utf8;
     in {
       packages = {
-        haskell-utf8 = utf8.components.library;
+        with-utf8 = with-utf8.components.library;
       };
 
       checks = {
-        build = self.packages.haskell-utf8;
-        test = utf8.checks.utf8-test;
+        build = self.packages.with-utf8;
+        test = with-utf8.checks.with-utf8-test;
       };
     };
 }

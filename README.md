@@ -1,4 +1,4 @@
-# utf8 _(haskell-utf8)_
+# `with-utf8`
 
 Get your IO right on the first try.
 
@@ -10,7 +10,7 @@ in the modern world.
 See [this blog post][blog:post] for more details on why this library needs to
 exists and an explanation of some of the opinionated decisions it is based on.
 
-[blog:post]: https://serokell.io/blog/haskell-utf8
+[blog:post]: https://serokell.io/blog/haskell-with-utf8
 
 
 ## Use
@@ -19,10 +19,10 @@ See the documentation on Hackage for details, this is a quick summary.
 
 ### Step 1: Get it
 
-The [library is on Hackage][hackage:utf8],
+The [library is on Hackage][hackage:with-utf8],
 go ahead and add it to the dependencies of your project.
 
-[hackage:utf8]: https://hackage.haskell.org/package/utf8
+[hackage:with-utf8]: https://hackage.haskell.org/package/with-utf8
 
 ### Step 2: Wrap your `main`
 

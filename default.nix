@@ -23,5 +23,5 @@ in
 if exposeFlake then
   flake
 else {
-  inherit (flake.packages) haskell-utf8;
+  inherit (flake.packages) with-utf8;
 }

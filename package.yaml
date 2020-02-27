@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-name: utf8
+name: with-utf8
 version: 0.0.0
 synopsis: Get your IO right on the first try
 description: |
@@ -15,7 +15,7 @@ description: |
     * "Main.Utf8"
     * "System.IO.Utf8"
 
-  See <https://serokell.io/blog/haskell-utf8 this blog post> for why this
+  See <https://serokell.io/blog/haskell-with-utf8 this blog post> for why this
   library exists and what exactly it does.
 category: IO
 
@@ -23,7 +23,7 @@ author: Kirill Elagin <kirelagin@serokell.io>
 copyright: 2020 Serokell
 license-file: LICENSES/MPL-2.0.txt
 
-github: serokell/haskell-utf8
+github: serokell/haskell-with-utf8
 
 extra-doc-files:
   - CHANGELOG.md
@@ -45,12 +45,12 @@ library:
     - text >= 0.7
 
 tests:
-  utf8-test:
+  with-utf8-test:
     source-dirs: test
     main: Test.hs
 
     dependencies:
-      - utf8
+      - with-utf8
 
       - base
       - deepseq
