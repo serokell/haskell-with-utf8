@@ -40,7 +40,7 @@ library:
   source-dirs: lib
 
   dependencies:
-    - base ^>= 4.12
+    - base >= 4.10 && < 4.14
     - safe-exceptions >= 0.1  # only really needed for polymorphic bracket
     - text >= 0.7
 
