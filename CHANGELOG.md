@@ -8,6 +8,9 @@ SPDX-License-Identifier: MPL-2.0
 
 ## Unreleased
 
+
+## 1.0.0.0
+
 Initial release.
 
 ### Added
