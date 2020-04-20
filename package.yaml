@@ -44,6 +44,15 @@ library:
     - safe-exceptions >= 0.1 && < 0.2  # only really needed for polymorphic bracket
     - text >= 0.7 && < 1.3
 
+executables:
+  utf8-troubleshoot:
+    source-dirs: app/utf8-troubleshoot
+    main: Main.hs
+
+    dependencies:
+      - base
+      - directory
+
 tests:
   with-utf8-test:
     source-dirs: test

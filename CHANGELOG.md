@@ -8,6 +8,10 @@ SPDX-License-Identifier: MPL-2.0
 
 ## Unreleased
 
+### Added
+
+- `utf8-troubleshoot` – the troubleshooting tool
+
 
 ## 1.0.0.0
 

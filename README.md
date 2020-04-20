@@ -80,6 +80,16 @@ _Note: there is no `System.IO.Utf8.writeFile`._
 If, for some reason, you really need to use `withFile`/`openFile` from `base`,
 do the same as in the previous step.
 
+## Troubleshooting
+
+Locales are pretty straightforward, but some people might have their terminals
+misconfigured for various reasons. To help troubleshoot any potential issues,
+this package comes with a tool called `utf8-troubleshoot`.
+
+This tool outputs some basic information about locale settings in the OS and
+what they end up being mapped to in Haskell. If you are looking for help,
+please, provide the output of this tool, or if you are helping someone,
+ask them to run this tool and provide the output.
 
 ## Contributing
 
