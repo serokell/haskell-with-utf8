@@ -6,7 +6,9 @@ SPDX-License-Identifier: MPL-2.0
 
 # Changelog
 
-## Unreleased
+## 1.0.1.0
+
+GHC 8.10 compatibility and a new troubleshooting tool.
 
 ### Added
 
