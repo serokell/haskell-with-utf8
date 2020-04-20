@@ -8,10 +8,12 @@ module Main (main) where
 
 import Prelude hiding (print, putStr, putStrLn)
 
+import Data.Version (showVersion)
 import GHC.IO.Encoding (getLocaleEncoding, initLocaleEncoding)
 import GHC.Show (showLitString)
 import System.Directory (doesDirectoryExist, doesPathExist, listDirectory)
 import System.Environment (lookupEnv)
+import System.Info (arch, compilerName, compilerVersion, os)
 import System.IO (hGetEncoding, stderr, stdout)
 
 
@@ -29,6 +31,22 @@ putStr = P.putStr . protect
 putStrLn :: String -> IO ()
 putStrLn = P.putStrLn . protect
 
+showEnvVar :: String -> IO ()
+showEnvVar name = do
+  putStr $ "  * " <> name <> " "
+  lookupEnv name >>= \case
+    Nothing -> putStrLn "is not set"
+    Just v -> putStrLn $ "= " <> v
+
+
+showSystem :: IO ()
+showSystem = do
+    putStrLn "# System"
+    putStrLn $ "  * OS = " <> os
+    putStrLn $ "  * arch = " <> arch
+    putStrLn $ "  * compiler = "
+            <> compilerName <> " " <> showVersion compilerVersion
+    showEnvVar "TERM"
 
 showGhc :: IO ()
 showGhc = do
@@ -41,7 +59,7 @@ showGhc = do
 showEnv :: IO ()
 showEnv = do
     putStrLn "# Environment"
-    mapM_ showVar
+    mapM_ showEnvVar
       [ "LANG"
       , "LC_COLLATE"
       , "LC_CTYPE"
@@ -51,13 +69,6 @@ showEnv = do
       , "LC_TIME"
       , "LC_ALL="
       ]
-  where
-    showVar :: String -> IO ()
-    showVar name = do
-      putStr $ "  * " <> name <> " "
-      lookupEnv name >>= \case
-        Nothing -> putStrLn "is not set"
-        Just v -> putStrLn $ "= " <> v
 
 showLocaleArchive :: IO ()
 showLocaleArchive = do
@@ -84,6 +95,7 @@ showLocaleArchive = do
 
 main :: IO ()
 main = do
+  showSystem
   showGhc
   showEnv
   showLocaleArchive
