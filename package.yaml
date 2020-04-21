@@ -49,6 +49,8 @@ executables:
     source-dirs: app/utf8-troubleshoot
     main: Main.hs
 
+    c-sources: app/utf8-troubleshoot/cbits/locale.c
+
     dependencies:
       - base
       - directory
