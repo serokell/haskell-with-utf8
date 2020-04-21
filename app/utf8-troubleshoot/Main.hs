@@ -11,7 +11,7 @@ module Main (main) where
 
 import Prelude hiding (print, putStr, putStrLn)
 
-import Control.Exception.Safe (handleIO, tryIO)
+import Control.Exception.Safe (catchIO, tryIO)
 import Control.Monad (filterM, forM_)
 import Data.List (sort)
 import Data.Version (showVersion)
@@ -118,7 +118,8 @@ showLocales = do
         showLocaleList (lines out)
       Left _ -> do
         listDir "/usr/lib/locale"
-        handleIO (\_ -> pure ()) $ listFile "/usr/lib/locale/locale-archive"
+        listFile "/usr/lib/locale/locale-archive" `catchIO` \e ->
+          putStrLn $ "<error>: " <> show e
   where
     showLocaleList :: [String] -> IO ()
     showLocaleList locales =
@@ -141,8 +142,8 @@ showLocales = do
     listFile path = doesPathExist path >>= \case
       False -> putStrLn $ "  * " <> path <> " does not exist."
       True -> do
-        out <- readProcess "localedef" ["--list", path] ""
         putStrLn $ "  * " <> path <> ":"
+        out <- readProcess "localedef" ["--list", path] ""
         showLocaleList (lines out)
 
 
