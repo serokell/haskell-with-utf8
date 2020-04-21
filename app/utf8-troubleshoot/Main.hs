@@ -8,14 +8,18 @@ module Main (main) where
 
 import Prelude hiding (print, putStr, putStrLn)
 
+import Control.Exception.Safe (handleIO, tryIO)
+import Control.Monad (filterM, forM_)
+import Data.List (sort)
 import Data.Version (showVersion)
 import GHC.IO.Encoding (getLocaleEncoding, initLocaleEncoding)
 import GHC.Show (showLitString)
 import System.Directory (doesDirectoryExist, doesPathExist, listDirectory)
 import System.Environment (lookupEnv)
+import System.FilePath ((</>))
 import System.Info (arch, compilerName, compilerVersion, os)
 import System.IO (hGetEncoding, stderr, stdout)
-
+import System.Process (readProcess)
 
 import qualified Prelude as P
 
@@ -70,17 +74,23 @@ showEnv = do
       , "LC_ALL="
       ]
 
-showLocaleArchive :: IO ()
-showLocaleArchive = do
-    putStrLn "# Locale archive"
-    lookupEnv "LOCPATH" >>= \case
-      Nothing -> listDir localePath
-      Just p
-        | p == localePath -> listDir localePath
-        | otherwise -> listDir p *> listDir localePath
+showLocales :: IO ()
+showLocales = do
+    putStrLn "# Locales"
+    tryIO callLocalectl >>= \case
+      Right out -> do
+        putStrLn $ "  * localectl list-locales:"
+        showLocaleList (lines out)
+      Left _ -> do
+        listDir "/usr/lib/locale"
+        handleIO (\_ -> pure ()) $ listFile "/usr/lib/locale/locale-archive"
   where
-    localePath :: FilePath
-    localePath = "/usr/share/locale"
+    showLocaleList :: [String] -> IO ()
+    showLocaleList locales =
+      forM_ (sort locales) $ \item -> putStrLn $ "    * " <> item
+
+    callLocalectl :: IO String
+    callLocalectl = readProcess "localectl" ["list-locales"] ""
 
     listDir :: FilePath -> IO ()
     listDir path = doesPathExist path >>= \case
@@ -89,8 +99,17 @@ showLocaleArchive = do
         False -> putStrLn $ "  * " <> path <> " is not a directory."
         True -> do
           putStrLn $ "  * " <> path <> ":"
-          listDirectory path >>= mapM_ (\item ->
-            putStrLn $ "    * " <> item)
+          ls <- listDirectory path >>= filterM (doesDirectoryExist . (path </>))
+          showLocaleList ls
+
+    listFile :: FilePath -> IO ()
+    listFile path = doesPathExist path >>= \case
+      False -> putStrLn $ "  * " <> path <> " does not exist."
+      True -> do
+        out <- readProcess "localedef" ["--list", path] ""
+        putStrLn $ "  * " <> path <> ":"
+        showLocaleList (lines out)
+
 
 
 main :: IO ()
@@ -98,4 +117,4 @@ main = do
   showSystem
   showGhc
   showEnv
-  showLocaleArchive
+  showLocales

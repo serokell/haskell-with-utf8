@@ -52,6 +52,9 @@ executables:
     dependencies:
       - base
       - directory
+      - filepath
+      - process
+      - safe-exceptions
 
 tests:
   with-utf8-test:
