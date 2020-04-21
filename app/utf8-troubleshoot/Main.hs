@@ -77,7 +77,7 @@ showCbits = do
 #if defined(HAVE_LIBCHARSET)
       enc <- c_libcharsetEncoding >>= peekCAString
       putStrLn $ "  * libcharset:locale_charset = " <> enc
-#elif
+#else
       putStrLn $ "  * No libcharset."
 #endif
 
@@ -86,7 +86,7 @@ showCbits = do
 #if defined(HAVE_LANGINFO_H)
       enc <- c_langinfoEncoding >>= peekCAString
       putStrLn $ "  * langinfo.h:nl_langinfo(CODESET) = " <> enc
-#elif
+#else
       putStrLn $ "  * No <langinfo.h>."
 #endif
 
