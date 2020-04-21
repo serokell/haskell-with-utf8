@@ -2,7 +2,10 @@
 --
 -- SPDX-License-Identifier: MPL-2.0
 
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE LambdaCase #-}
+
+#include <HsBaseConfig.h>
 
 module Main (main) where
 
@@ -12,7 +15,9 @@ import Control.Exception.Safe (handleIO, tryIO)
 import Control.Monad (filterM, forM_)
 import Data.List (sort)
 import Data.Version (showVersion)
+import Foreign.C.String (CString, peekCAString)
 import GHC.IO.Encoding (getLocaleEncoding, initLocaleEncoding)
+import GHC.IO.Encoding.Iconv (localeEncodingName)
 import GHC.Show (showLitString)
 import System.Directory (doesDirectoryExist, doesPathExist, listDirectory)
 import System.Environment (lookupEnv)
@@ -59,6 +64,41 @@ showGhc = do
     getLocaleEncoding >>= \e -> putStrLn $ "  * locale encoding = " <> show e
     hGetEncoding stdout >>= \e -> putStrLn $ "  * stdout = " <> show e
     hGetEncoding stderr >>= \e -> putStrLn $ "  * stderr = " <> show e
+
+showCbits :: IO ()
+showCbits = do
+    putStrLn "# C bits"
+    putStrLn $ "  * localeEncodingName = " <> localeEncodingName
+    showLibcharset
+    showLanginfoh
+  where
+    showLibcharset :: IO ()
+    showLibcharset = do
+#if defined(HAVE_LIBCHARSET)
+      enc <- c_libcharsetEncoding >>= peekCAString
+      putStrLn $ "  * libcharset:locale_charset = " <> enc
+#else
+      putStrLn $ "  * No libcharset."
+#endif
+
+    showLanginfoh :: IO ()
+    showLanginfoh = do
+#if defined(HAVE_LANGINFO_H)
+      enc <- c_langinfoEncoding >>= peekCAString
+      putStrLn $ "  * langinfo.h:nl_langinfo(CODESET) = " <> enc
+#else
+      putStrLn $ "  * No <langinfo.h>."
+#endif
+
+#if defined(HAVE_LIBCHARSET)
+foreign import ccall unsafe "libcharsetEncoding"
+  c_libcharsetEncoding :: IO CString
+#endif
+
+#if defined(HAVE_LANGINFO_H)
+foreign import ccall unsafe "langinfoEncoding"
+  c_langinfoEncoding :: IO CString
+#endif
 
 showEnv :: IO ()
 showEnv = do
@@ -116,5 +156,6 @@ main :: IO ()
 main = do
   showSystem
   showGhc
+  showCbits
   showEnv
   showLocales
