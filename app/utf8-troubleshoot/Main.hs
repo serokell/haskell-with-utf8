@@ -105,12 +105,7 @@ showEnv = do
     putStrLn "# Environment"
     mapM_ showEnvVar
       [ "LANG"
-      , "LC_COLLATE"
       , "LC_CTYPE"
-      , "LC_MESSAGES"
-      , "LC_MONETARY"
-      , "LC_NUMERIC"
-      , "LC_TIME"
       , "LC_ALL="
       ]
 
