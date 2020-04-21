@@ -2,9 +2,7 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#define INLINE
-
-#include <HsBase.h>
+#include <HsBaseConfig.h>
 
 #if !defined(mingw32_HOST_OS)
 
