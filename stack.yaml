@@ -2,5 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-resolver: lts-14.25
+resolver: nightly-2020-03-10
 packages: [.]
+nix:
+  enable: true
