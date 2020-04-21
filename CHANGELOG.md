@@ -6,6 +6,13 @@ SPDX-License-Identifier: MPL-2.0
 
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `utf8-troubleshoot`: improve available locale detection
+- `utf8-troubleshoot`: display raw results from C libraries
+
 ## 1.0.1.0
 
 GHC 8.10 compatibility and a new troubleshooting tool.
