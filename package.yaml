@@ -57,6 +57,7 @@ executables:
       - filepath
       - process
       - safe-exceptions
+      - th-env
 
 tests:
   with-utf8-test:
