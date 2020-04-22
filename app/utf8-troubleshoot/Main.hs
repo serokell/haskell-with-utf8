@@ -149,9 +149,9 @@ showLocales = do
 
     listDir :: FilePath -> IO ()
     listDir path = doesPathExist path >>= \case
-      False -> putStrLn $ "  * " <> path <> " does not exist."
+      False -> putStrLn $ "  * " <> path <> " does not exist"
       True -> doesDirectoryExist path >>= \case
-        False -> putStrLn $ "  * " <> path <> " is not a directory."
+        False -> putStrLn $ "  * " <> path <> " is not a directory"
         True -> do
           putStrLn $ "  * " <> path <> ":"
           ls <- listDirectory path >>= filterM (doesDirectoryExist . (path </>))
@@ -159,7 +159,7 @@ showLocales = do
 
     listFile :: FilePath -> IO ()
     listFile path = doesPathExist path >>= \case
-      False -> putStrLn $ "  * " <> path <> " does not exist."
+      False -> putStrLn $ "  * " <> path <> " does not exist"
       True -> do
         putStrLn $ "  * " <> path <> ":"
         out <- readProcess "localedef" ["--list", path] ""
