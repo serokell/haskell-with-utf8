@@ -4,6 +4,8 @@
 
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeApplications #-}
 
 #include <HsBaseConfig.h>
 
@@ -12,13 +14,15 @@ module Main (main) where
 import Prelude hiding (print, putStr, putStrLn)
 
 import Control.Exception.Safe (catchIO, tryIO)
-import Control.Monad (filterM, forM_)
+import Control.Monad (filterM, forM_, when)
 import Data.List (sort)
+import Data.Maybe (isJust)
 import Data.Version (showVersion)
 import Foreign.C.String (CString, peekCAString)
 import GHC.IO.Encoding (getLocaleEncoding, initLocaleEncoding)
 import GHC.IO.Encoding.Iconv (localeEncodingName)
 import GHC.Show (showLitString)
+import Language.Haskell.TH.Env (envQ)
 import System.Directory (doesDirectoryExist, doesPathExist, listDirectory)
 import System.Environment (lookupEnv)
 import System.FilePath ((</>))
@@ -56,6 +60,21 @@ showSystem = do
     putStrLn $ "  * compiler = "
             <> compilerName <> " " <> showVersion compilerVersion
     showEnvVar "TERM"
+
+    -- Nix stuff
+    let builtNix = isJust ($$(envQ @String "NIX_BUILD_TOP"))
+    when builtNix $ do
+      putStrLn "  * Built with Nix"
+    let builtNixShell = isJust ($$(envQ @String "IN_NIX_SHELL"))
+    when builtNixShell $ do
+      putStrLn "  * Built in nix-shell"
+    inNixShell <- isJust <$> lookupEnv "IN_NIX_SHELL"
+    when inNixShell $ do
+      putStrLn "  * Running in nix-shell"
+
+    when (builtNix || builtNixShell) $ do
+      showEnvVar "LOCALE_ARCHIVE"
+
 
 showGhc :: IO ()
 showGhc = do
