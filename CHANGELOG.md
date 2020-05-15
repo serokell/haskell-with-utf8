@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 1.0.2.0
+
+Improve `utf8-troubleshoot` to make it useful for identifying tricky cases.
 
 ### Changed
 

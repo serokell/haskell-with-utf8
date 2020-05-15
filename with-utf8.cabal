@@ -4,10 +4,10 @@ cabal-version: 1.18
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1ea347833d52b624ed883ebcc39e185040111f473bcec86b8026852eb7efea20
+-- hash: 7a8e17b836c254d67dc50ee878cda9586a823dedf7f76b1f36426f2ad817e7b3
 
 name:           with-utf8
-version:        1.0.1.0
+version:        1.0.2.0
 synopsis:       Get your IO right on the first try
 description:    This minimalistic library helps you navigate the world of text encodings
                 avoiding @invalid argument (invalid byte sequence)@
