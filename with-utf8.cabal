@@ -1,0 +1,104 @@
+cabal-version: 1.18
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 1ea347833d52b624ed883ebcc39e185040111f473bcec86b8026852eb7efea20
+
+name:           with-utf8
+version:        1.0.1.0
+synopsis:       Get your IO right on the first try
+description:    This minimalistic library helps you navigate the world of text encodings
+                avoiding @invalid argument (invalid byte sequence)@
+                and @invalid argument (invalid character)@ in runtime.
+                .
+                The two most important modules are:
+                .
+                  * "Main.Utf8"
+                  * "System.IO.Utf8"
+                .
+                See <https://serokell.io/blog/haskell-with-utf8 this blog post> for why this
+                library exists and what exactly it does.
+category:       IO
+homepage:       https://github.com/serokell/haskell-with-utf8#readme
+bug-reports:    https://github.com/serokell/haskell-with-utf8/issues
+author:         Kirill Elagin <kirelagin@serokell.io>
+maintainer:     Kirill Elagin <kirelagin@serokell.io>
+copyright:      2020 Serokell
+license:        MPL-2.0
+license-file:   LICENSES/MPL-2.0.txt
+build-type:     Simple
+extra-doc-files:
+    CHANGELOG.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/serokell/haskell-with-utf8
+
+library
+  exposed-modules:
+      Data.Text.IO.Utf8
+      Data.Text.Lazy.IO.Utf8
+      Main.Utf8
+      System.IO.Utf8
+      System.IO.Utf8.Internal
+  other-modules:
+      Paths_with_utf8
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
+  build-depends:
+      base >=4.10 && <4.15
+    , safe-exceptions >=0.1 && <0.2
+    , text >=0.7 && <1.3
+  default-language: Haskell2010
+
+executable utf8-troubleshoot
+  main-is: Main.hs
+  other-modules:
+      Paths_with_utf8
+  hs-source-dirs:
+      app/utf8-troubleshoot
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
+  c-sources:
+      app/utf8-troubleshoot/cbits/locale.c
+  build-depends:
+      base
+    , directory
+    , filepath
+    , process
+    , safe-exceptions
+    , th-env
+  default-language: Haskell2010
+
+test-suite with-utf8-test
+  type: exitcode-stdio-1.0
+  main-is: Test.hs
+  other-modules:
+      Test.Utf8.Choice
+      Test.Utf8.ReadWrite
+      Test.Utf8.Set
+      Test.Util
+      Tree
+      Paths_with_utf8
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
+  build-tool-depends:
+      tasty-discover:tasty-discover
+  build-depends:
+      HUnit
+    , base
+    , deepseq
+    , hedgehog
+    , safe-exceptions
+    , tasty
+    , tasty-hedgehog
+    , tasty-hunit
+    , temporary
+    , text
+    , unix
+    , with-utf8
+  default-language: Haskell2010
