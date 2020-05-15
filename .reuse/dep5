@@ -1,14 +1,5 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 
-# Make Hackage happy
-Files: README.md
-Copyright: 2020 Serokell <https://serokell.io/>
-License: MPL-2.0
-
-Files: stack.yaml.lock
-Copyright: 2020 Serokell <https://serokell.io/>
-License: MPL-2.0
-
 Files: nix/sources.*
 Copyright: 2020 Serokell <https://serokell.io/>
 License: MPL-2.0
