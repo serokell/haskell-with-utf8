@@ -30,6 +30,12 @@ import System.Info (arch, compilerName, compilerVersion, os)
 import System.IO (hGetEncoding, stderr, stdout)
 import System.Process (readProcess)
 
+
+#if MIN_VERSION_base(4,11,0)
+#else
+import Data.Semigroup ((<>))
+#endif
+
 import qualified Prelude as P
 
 
