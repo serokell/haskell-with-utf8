@@ -36,13 +36,15 @@ ghc-options:
   - -Wincomplete-uni-patterns
   - -Wredundant-constraints
 
+dependencies:
+  - base >= 4.10 && < 4.15
+  - text >= 0.7 && < 1.3
+
 library:
   source-dirs: lib
 
   dependencies:
-    - base >= 4.10 && < 4.15
     - safe-exceptions >= 0.1 && < 0.2  # only really needed for polymorphic bracket
-    - text >= 0.7 && < 1.3
 
 executables:
   utf8-troubleshoot:
@@ -52,12 +54,11 @@ executables:
     c-sources: app/utf8-troubleshoot/cbits/locale.c
 
     dependencies:
-      - base
-      - directory
-      - filepath
-      - process
+      - directory >= 1.2.5.0 && < 1.4
+      - filepath >= 1.0 && < 1.5
+      - process >= 1.0.1.1 && < 1.7
       - safe-exceptions
-      - th-env
+      - th-env >= 0.1.0.0 && < 0.2
 
 tests:
   with-utf8-test:
@@ -67,11 +68,9 @@ tests:
     dependencies:
       - with-utf8
 
-      - base
       - deepseq
       - safe-exceptions
       - temporary
-      - text
       - unix
 
       - hedgehog
