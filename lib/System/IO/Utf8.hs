@@ -146,7 +146,7 @@ setTerminalHandleEncoding = liftIO . void . hSetBestUtf8Enc (const $ pure True)
 -- Use this function only if you are sure you want to treat this handle as
 -- a terminal (that is, you will be using it to interact with the user
 -- and to write user-visible messages, rather than something that can
--- be reasonable expected to go to a file).
+-- be reasonably expected to go to a file).
 --
 -- This function is safe to call on handles open in binary mode and it will
 -- do nothing on them.
