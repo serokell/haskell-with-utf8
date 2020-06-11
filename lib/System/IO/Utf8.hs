@@ -9,7 +9,7 @@
 -- |
 --
 -- Standard IO functions assume that the character encoding of the data
--- they read or write is the same as the one used by current locale. In many
+-- they read or write is the same as the one used by the current locale. In many
 -- situtations this assumption is wrong, as tools work with files, and
 -- files nowadays are mostly UTF-8 encoded, regardless of the locale.
 -- Therefore, it is almost always a good idea to switch the encoding of
@@ -17,7 +17,7 @@
 --
 -- The same applies to standard input, output, and error handles. However,
 -- there is an edge-case: if they are attached to a terminal, and the
--- encoding is not UTF-8, using UTF-8 might actually be unsafe.
+-- current locale encoding is not UTF-8, using UTF-8 might actually be unsafe.
 --
 -- If you are developing an executable, in most cases, it is enough to
 -- configure the environment accordingly on program start, see the
