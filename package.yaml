@@ -10,13 +10,13 @@ description: |
   avoiding @invalid argument (invalid byte sequence)@
   and @invalid argument (invalid character)@ in runtime.
 
+  See <https://serokell.io/blog/haskell-with-utf8 this blog post> for why this
+  library exists and what exactly it does.
+
   The two most important modules are:
 
     * "Main.Utf8"
     * "System.IO.Utf8"
-
-  See <https://serokell.io/blog/haskell-with-utf8 this blog post> for why this
-  library exists and what exactly it does.
 category: IO
 
 author: Kirill Elagin <kirelagin@serokell.io>

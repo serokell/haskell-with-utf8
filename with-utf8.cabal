@@ -4,7 +4,7 @@ cabal-version: 1.18
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2ed0a249f825ee3e79d21ffa4b3492196be09adead30d226047e943c9aa8a7a7
+-- hash: bf3d24a587deb649f3efa181994076f1ba6971e8f9684d0a1d5516c2d9c1d16b
 
 name:           with-utf8
 version:        1.0.2.1
@@ -13,13 +13,13 @@ description:    This minimalistic library helps you navigate the world of text e
                 avoiding @invalid argument (invalid byte sequence)@
                 and @invalid argument (invalid character)@ in runtime.
                 .
+                See <https://serokell.io/blog/haskell-with-utf8 this blog post> for why this
+                library exists and what exactly it does.
+                .
                 The two most important modules are:
                 .
                   * "Main.Utf8"
                   * "System.IO.Utf8"
-                .
-                See <https://serokell.io/blog/haskell-with-utf8 this blog post> for why this
-                library exists and what exactly it does.
 category:       IO
 homepage:       https://github.com/serokell/haskell-with-utf8#readme
 bug-reports:    https://github.com/serokell/haskell-with-utf8/issues
