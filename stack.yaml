@@ -6,4 +6,4 @@ resolver: lts-14.25
 packages: [.]
 
 extra-deps:
-  - th-env-0.1.0.1
+  - th-env-0.1.0.2
