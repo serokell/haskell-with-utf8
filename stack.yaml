@@ -2,8 +2,5 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-resolver: lts-14.25
+resolver: lts-17.4
 packages: [.]
-
-extra-deps:
-  - th-env-0.1.0.2
