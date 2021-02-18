@@ -20,7 +20,9 @@ import Data.Maybe (isJust)
 import Data.Version (showVersion)
 import Foreign.C.String (CString, peekCAString)
 import GHC.IO.Encoding (getLocaleEncoding, initLocaleEncoding)
+#if !(defined(mingw32_HOST_OS) || defined(__MINGW32__))
 import GHC.IO.Encoding.Iconv (localeEncodingName)
+#endif
 import GHC.Show (showLitString)
 import Language.Haskell.TH.Env (envQ)
 import System.Directory (doesDirectoryExist, doesPathExist, listDirectory)
@@ -93,7 +95,9 @@ showGhc = do
 showCbits :: IO ()
 showCbits = do
     putStrLn "# C bits"
+#if !(defined(mingw32_HOST_OS) || defined(__MINGW32__))
     putStrLn $ "  * localeEncodingName = " <> localeEncodingName
+#endif
     showLibcharset
     showLanginfoh
   where
