@@ -7,8 +7,8 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    haskell-nix.url = "github:input-output-hk/haskell.nix/ba87ffb84bc4158ada14908bddee9df2c81ac31b";
-    nixpkgs.url = "github:nixos/nixpkgs/f02bf8ffb9a5ec5e8f6f66f1e5544fd2aa1a0693";
+    haskell-nix.url = "github:input-output-hk/haskell.nix/bd45da822d2dccdbb3f65d0b52dd2a91fd65ca4e";
+    nixpkgs.url = "github:serokell/nixpkgs";
   };
 
   outputs = { self, nixpkgs, flake-utils, haskell-nix }:
