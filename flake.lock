@@ -23,17 +23,16 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1614746792,
-        "narHash": "sha256-KAxmQxYDRbB/pYW5vqvPSwZ3kft5UulZ5fY1nodP8FQ=",
+        "lastModified": 1617010607,
+        "narHash": "sha256-xaC+581n/gEI/NvtppOMWWD00I+O5ysVd17oEIHWo4w=",
         "owner": "input-output-hk",
         "repo": "haskell.nix",
-        "rev": "43cb0fc8957be7ab027f8bd5d48bc22479032c1f",
+        "rev": "9ce7bf1e0276a9f71440ab6f74b044908647bcfc",
         "type": "github"
       },
       "original": {
         "owner": "input-output-hk",
         "repo": "haskell.nix",
-        "rev": "43cb0fc8957be7ab027f8bd5d48bc22479032c1f",
         "type": "github"
       }
     },
@@ -103,17 +102,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1615307759,
-        "narHash": "sha256-KpzbA2Uf7ZSuu+Q7fAA1DBiY319HrU1QbjzsmgL3I8w=",
+        "lastModified": 1616785305,
+        "narHash": "sha256-Zgs4UrUZ2J6MJLTwO8AHHt9bPDyTdJLYyzgfdABKtF4=",
         "owner": "serokell",
         "repo": "nixpkgs",
-        "rev": "25cb6c920e31f80cc4c4559c840c5753d4a9012f",
+        "rev": "8addc8b778fbd9df4464ef0e8ac07d29ce7fcfa6",
         "type": "github"
       },
       "original": {
         "owner": "serokell",
         "repo": "nixpkgs",
-        "rev": "25cb6c920e31f80cc4c4559c840c5753d4a9012f",
         "type": "github"
       }
     },

@@ -7,8 +7,8 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    haskell-nix.url = "github:input-output-hk/haskell.nix/43cb0fc8957be7ab027f8bd5d48bc22479032c1f";
-    nixpkgs.url = "github:serokell/nixpkgs/25cb6c920e31f80cc4c4559c840c5753d4a9012f";
+    haskell-nix.url = "github:input-output-hk/haskell.nix";
+    nixpkgs.url = "github:serokell/nixpkgs";
   };
 
   outputs = { self, nixpkgs, flake-utils, haskell-nix }:
@@ -29,13 +29,13 @@
 
         checks =
           let
-            mkGhcCheck = ghcName: {
-              name = "test-${ghcName}";
-              value = check { ghc = pkgs.haskell-nix.compiler.${ghcName}; };
+            mkGhcCheck = ghcVersion: {
+              name = "test-ghc${ghcVersion}";
+              value = check { ghc = pkgs.haskell-nix.compiler."ghc${ghcVersion}"; };
             };
           in {
             test = with-utf8.checks.with-utf8-test;
-          } // lib.listToAttrs (map mkGhcCheck [ "ghc884" "ghc8104" ]);
+          } // lib.listToAttrs (map mkGhcCheck [ "884" "8104" "901" ]);
 
         apps.utf8-troubleshoot = {
           type = "app";

@@ -4,3 +4,7 @@
 
 resolver: lts-17.4
 packages: [.]
+
+extra-packages:
+  # Hedgehog with fixes for GHC 9
+  - hedgehog-1.0.5
