@@ -42,7 +42,7 @@
             };
           in {
             test = with-utf8.checks.with-utf8-test;
-          } // lib.listToAttrs (map mkGhcCheck [ "884" "8104" "901" ]);
+          } // lib.listToAttrs (map mkGhcCheck [ "884" "8107" "901" ]);
 
         apps.utf8-troubleshoot = {
           type = "app";
