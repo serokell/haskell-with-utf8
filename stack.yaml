@@ -2,9 +2,5 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-resolver: lts-17.4
+resolver: lts-18.14
 packages: [.]
-
-extra-packages:
-  # Hedgehog with fixes for GHC 9
-  - hedgehog-1.0.5

@@ -1,10 +1,10 @@
 cabal-version: 1.18
 
--- This file has been generated from package.yaml by hpack version 0.34.2.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f91b72904bb053decd8bf11fafaaaa6c44c48fb8f1b4046243127067afc269d3
+-- hash: 906fcdb75bd6730f9fe9e6383fdebc53f13cea49ad97c5f0bbd3b7a85a056830
 
 name:           with-utf8
 version:        1.0.2.2
@@ -51,7 +51,7 @@ library
   ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
   build-depends:
       base >=4.10 && <4.16
-    , safe-exceptions >=0.1 && <0.2
+    , safe-exceptions ==0.1.*
     , text >=0.7 && <1.3
   default-language: Haskell2010
 
