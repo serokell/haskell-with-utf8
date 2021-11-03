@@ -4,3 +4,8 @@
 
 resolver: lts-18.14
 packages: [.]
+
+extra-deps:
+- git: https://github.com/felixonmars/th-env
+  commit: 57715292e3ae11c9be3282e0799134622a94a271
+  # nix-sha256: 17cjkb30560h56m1jkanjazq2dswsklm8vplqb0psn2bawl381fk
