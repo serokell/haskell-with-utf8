@@ -16,7 +16,6 @@ import Control.Monad ((>=>))
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Data.Text (Text)
 import GHC.IO.Encoding (utf8)
-import System.IO (FilePath)
 import System.IO.Temp (withSystemTempFile)
 
 import Hedgehog (Property, (===), forAll, property)
