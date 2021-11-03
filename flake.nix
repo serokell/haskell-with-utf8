@@ -5,13 +5,20 @@
 {
   description = "Get your UTF-8 IO right on the first try";
 
-  inputs = {
-    flake-utils.url = "github:numtide/flake-utils";
-    haskell-nix.url = "github:input-output-hk/haskell.nix";
-    nixpkgs.url = "github:serokell/nixpkgs";
+  nixConfig = {
+    flake-registry = "https://github.com/serokell/flake-registry/raw/master/flake-registry.json";
   };
 
-  outputs = { self, nixpkgs, flake-utils, haskell-nix }:
+  inputs = {
+    haskell-nix = {
+      inputs.hackage.follows = "hackage";
+      inputs.stackage.follows = "stackage";
+    };
+    hackage.flake = false;
+    stackage.flake = false;
+  };
+
+  outputs = { self, nixpkgs, flake-utils, haskell-nix, hackage, stackage }:
     flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
       let
         pkgs = nixpkgs.legacyPackages.${system}.extend haskell-nix.overlay;
