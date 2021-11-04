@@ -10,7 +10,6 @@
   };
 
   inputs = {
-    serokell-nix.url = "github:serokell/serokell.nix";
     nixpkgs.url = "github:serokell/nixpkgs";
     haskell-nix = {
       inputs.hackage.follows = "hackage";

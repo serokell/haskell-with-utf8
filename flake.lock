@@ -429,9 +429,8 @@
         "type": "github"
       },
       "original": {
-        "owner": "serokell",
-        "repo": "serokell.nix",
-        "type": "github"
+        "id": "serokell-nix",
+        "type": "indirect"
       }
     },
     "stackage": {
