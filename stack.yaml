@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2020 Serokell <https://serokell.io/>
+# SPDX-FileCopyrightText: 2021 Serokell <https://serokell.io/>
 #
 # SPDX-License-Identifier: MPL-2.0
 
@@ -6,4 +6,10 @@ resolver: lts-18.14
 packages: [.]
 
 extra-deps:
-  - th-env-0.1.0.3  # Required for GHC >= 9
+  # Required for GHC >= 9
+  - th-env-0.1.0.3
+
+  # Required for GHC >= 9.2
+  - constraints-0.13.1
+  - hashable-1.3.5.0
+  - random-1.2.1

@@ -199,11 +199,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1630978517,
-        "narHash": "sha256-4NOhGRVH9eu/cpADkSHxMqaAbHVsV7vrDDjjCul0jJA=",
+        "lastModified": 1636798039,
+        "narHash": "sha256-zUqHTquXysBMYsa7Ne7u9Wo1oLRl8ByQI6eJel7ZV5o=",
         "owner": "input-output-hk",
         "repo": "haskell.nix",
-        "rev": "a4e105dcdb6d2b9d0627b8f0b893cec80485c14e",
+        "rev": "91ec10c0321b75a79a4b6af69fdb30fa748ec0f7",
         "type": "github"
       },
       "original": {
@@ -264,11 +264,11 @@
     "nix-tools": {
       "flake": false,
       "locked": {
-        "lastModified": 1626997434,
-        "narHash": "sha256-1judQmP298ao6cGUNxcGhcAXHOnA9qSLvWk/ZtoUL7w=",
+        "lastModified": 1636018067,
+        "narHash": "sha256-ng306fkuwr6V/malWtt3979iAC4yMVDDH2ViwYB6sQE=",
         "owner": "input-output-hk",
         "repo": "nix-tools",
-        "rev": "c8c5e6a6fbb12a73598d1a434984a36e880ce3cf",
+        "rev": "ed5bd7215292deba55d6ab7a4e8c21f8b1564dda",
         "type": "github"
       },
       "original": {
@@ -342,11 +342,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1628785280,
-        "narHash": "sha256-2B5eMrEr6O8ff2aQNeVxTB+9WrGE80OB4+oM6T7fOcc=",
+        "lastModified": 1635295995,
+        "narHash": "sha256-sGYiXjFlxTTMNb4NSkgvX+knOOTipE6gqwPUQpxNF+c=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6525bbc06a39f26750ad8ee0d40000ddfdc24acb",
+        "rev": "22a500a3f87bbce73bd8d777ef920b43a636f018",
         "type": "github"
       },
       "original": {
@@ -388,16 +388,16 @@
     "old-ghc-nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1621819714,
-        "narHash": "sha256-EJCnYQSWk7FRLwS0lZgTWIiQ6pcvDX1VuD6LGD4Uwzs=",
+        "lastModified": 1631092763,
+        "narHash": "sha256-sIKgO+z7tj4lw3u6oBZxqIhDrzSkvpHtv0Kki+lh9Fg=",
         "owner": "angerman",
         "repo": "old-ghc-nix",
-        "rev": "f089a6f090cdb35fcf95f865fc6a31ba6b3ac4eb",
+        "rev": "af48a7a7353e418119b6dfe3cd1463a657f342b8",
         "type": "github"
       },
       "original": {
         "owner": "angerman",
-        "ref": "master2",
+        "ref": "master",
         "repo": "old-ghc-nix",
         "type": "github"
       }
@@ -421,11 +421,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1636031496,
-        "narHash": "sha256-wsZPJ94qOvZrCMMxm1eFwXH5DFtPaiwsgnkpKPm9vXk=",
+        "lastModified": 1636829084,
+        "narHash": "sha256-ZlfUAsiJt0uq5TBrtBWYwuoFaxJu3LiHKTHrLePI+Do=",
         "owner": "serokell",
         "repo": "serokell.nix",
-        "rev": "8a424210a184a6e0870448ad24c00079188d64b9",
+        "rev": "3feedad5710f94ae18483249b7e7d12d4549f4b4",
         "type": "github"
       },
       "original": {

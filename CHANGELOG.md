@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+Allow build with GHC 9.2.1.
+
+### Changed
+
+- Allow base 4.16
+
 ## 1.0.2.0
 
 Improve `utf8-troubleshoot` to make it useful for identifying tricky cases.
