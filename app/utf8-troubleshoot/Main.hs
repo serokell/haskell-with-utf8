@@ -135,7 +135,7 @@ showEnv = do
     mapM_ showEnvVar
       [ "LANG"
       , "LC_CTYPE"
-      , "LC_ALL="
+      , "LC_ALL"
       ]
 
 showLocales :: IO ()
