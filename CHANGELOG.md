@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+
+## 1.0.2.3
+
 Support GHC 9.2.1.
 
 ### Changed
