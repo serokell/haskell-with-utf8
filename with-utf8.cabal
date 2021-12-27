@@ -1,10 +1,10 @@
 cabal-version: 1.18
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.34.5.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a503b7726c9828d56678af138259fcb28ff277506741565ba90bba76c86bbd3a
+-- hash: 930f59e2f7815f238524f9e35825dd18c98fe04cfb768e3922af929bd6cf8c63
 
 name:           with-utf8
 version:        1.0.2.3
@@ -52,7 +52,7 @@ library
   build-depends:
       base >=4.10 && <4.17
     , safe-exceptions ==0.1.*
-    , text >=0.7 && <1.3
+    , text >=0.7 && <2.1
   default-language: Haskell2010
 
 executable utf8-troubleshoot
@@ -70,7 +70,7 @@ executable utf8-troubleshoot
     , filepath >=1.0 && <1.5
     , process >=1.0.1.1 && <1.7
     , safe-exceptions
-    , text >=0.7 && <1.3
+    , text >=0.7 && <2.1
     , th-env >=0.1.0.0 && <0.2
   default-language: Haskell2010
 
@@ -99,7 +99,7 @@ test-suite with-utf8-test
     , tasty-hedgehog
     , tasty-hunit
     , temporary
-    , text >=0.7 && <1.3
+    , text >=0.7 && <2.1
     , unix
     , with-utf8
   default-language: Haskell2010
