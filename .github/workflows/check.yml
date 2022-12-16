@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+#
+# SPDX-License-Identifier: MPL-2.0
+name: Nix flake check
+on: push
+
+jobs:
+  check:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: check nix flake
+        run: nix flake check -L --allow-import-from-derivation
