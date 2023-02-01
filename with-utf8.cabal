@@ -50,7 +50,7 @@ library
       lib
   ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
   build-depends:
-      base >=4.10 && <4.17
+      base >=4.10 && <4.18
     , safe-exceptions ==0.1.*
     , text >=0.7 && <2.1
   default-language: Haskell2010
@@ -65,7 +65,7 @@ executable utf8-troubleshoot
   c-sources:
       app/utf8-troubleshoot/cbits/locale.c
   build-depends:
-      base >=4.10 && <4.17
+      base >=4.10 && <4.18
     , directory >=1.2.5.0 && <1.4
     , filepath >=1.0 && <1.5
     , process >=1.0.1.1 && <1.7
@@ -91,7 +91,7 @@ test-suite with-utf8-test
       tasty-discover:tasty-discover
   build-depends:
       HUnit
-    , base >=4.10 && <4.17
+    , base >=4.10 && <4.18
     , deepseq
     , hedgehog
     , safe-exceptions
