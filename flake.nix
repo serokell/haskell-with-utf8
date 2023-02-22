@@ -10,7 +10,6 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:serokell/nixpkgs";
     haskell-nix = {
       inputs.hackage.follows = "hackage";
       inputs.stackage.follows = "stackage";
@@ -19,10 +18,10 @@
     stackage.flake = false;
   };
 
-  outputs = { self, nixpkgs, flake-utils, serokell-nix, haskell-nix, hackage, stackage }:
+  outputs = { self, flake-utils, serokell-nix, haskell-nix, hackage, stackage, ... }:
     flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system}.extend haskell-nix.overlay;
+        pkgs = haskell-nix.legacyPackages.${system};
 
         flake =
           serokell-nix.lib.haskell.makeFlake pkgs.haskell-nix pkgs.haskell-nix.stackProject {
