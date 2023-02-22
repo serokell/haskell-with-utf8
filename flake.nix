@@ -13,6 +13,7 @@
     haskell-nix = {
       inputs.hackage.follows = "hackage";
       inputs.stackage.follows = "stackage";
+      url = "github:input-output-hk/haskell.nix";
     };
     hackage.flake = false;
     stackage.flake = false;
@@ -26,7 +27,7 @@
         flake =
           serokell-nix.lib.haskell.makeFlake pkgs.haskell-nix pkgs.haskell-nix.stackProject {
             src = ./.;
-            ghcVersions = [ "884" "8107" "902" "926" ];
+            ghcVersions = [ "884" "8107" "902" "926" "944" ];
             modules = [ serokell-nix.lib.haskell.ciBuildOptions ];
           };
       in flake // {
