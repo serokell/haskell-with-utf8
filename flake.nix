@@ -26,7 +26,7 @@
         flake =
           serokell-nix.lib.haskell.makeFlake pkgs.haskell-nix pkgs.haskell-nix.stackProject {
             src = ./.;
-            ghcVersions = [ "884" "8107" "901" "921" ];
+            ghcVersions = [ "884" "8107" "902" "926" ];
             modules = [ serokell-nix.lib.haskell.ciBuildOptions ];
           };
       in flake // {
