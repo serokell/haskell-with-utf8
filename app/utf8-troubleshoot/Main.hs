@@ -2,9 +2,9 @@
 --
 -- SPDX-License-Identifier: MPL-2.0
 
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE CPP              #-}
+{-# LANGUAGE LambdaCase       #-}
+{-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE TypeApplications #-}
 
 #include <HsBaseConfig.h>
@@ -57,7 +57,7 @@ showEnvVar name = do
   putStr $ "  * " <> name <> " "
   lookupEnv name >>= \case
     Nothing -> putStrLn "is not set"
-    Just v -> putStrLn $ "= " <> v
+    Just v  -> putStrLn $ "= " <> v
 
 
 showSystem :: IO ()
@@ -107,7 +107,7 @@ showCbits = do
       enc <- c_libcharsetEncoding >>= peekCAString
       putStrLn $ "  * libcharset:locale_charset = " <> enc
 #else
-      putStrLn $ "  * No libcharset."
+      putStrLn "  * No libcharset."
 #endif
 
     showLanginfoh :: IO ()
@@ -116,7 +116,7 @@ showCbits = do
       enc <- c_langinfoEncoding >>= peekCAString
       putStrLn $ "  * langinfo.h:nl_langinfo(CODESET) = " <> enc
 #else
-      putStrLn $ "  * No <langinfo.h>."
+      putStrLn "  * No <langinfo.h>."
 #endif
 
 #if defined(HAVE_LIBCHARSET)
@@ -143,7 +143,7 @@ showLocales = do
     putStrLn "# Locales"
     tryIO callLocalectl >>= \case
       Right out -> do
-        putStrLn $ "  * localectl list-locales:"
+        putStrLn "  * localectl list-locales:"
         showLocaleList (lines out)
       Left _ -> do
         listDir "/usr/lib/locale"

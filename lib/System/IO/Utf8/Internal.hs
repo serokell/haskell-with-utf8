@@ -3,8 +3,7 @@
  - SPDX-License-Identifier: MPL-2.0
  -}
 
-{-# LANGUAGE LambdaCase   #-}
-{-# LANGUAGE ViewPatterns #-}
+{-# LANGUAGE LambdaCase #-}
 
 -- | Internal functions that implement encoding selection logic.
 module System.IO.Utf8.Internal
@@ -83,4 +82,4 @@ chooseBestEnc h hIsTerm (Just enc) = case textEncodingName enc of
     | "//TRANSLIT" `isSuffixOf` name -> pure Keep
     | otherwise -> hIsTerm h >>= \case
         False -> pure $ ChangeFromTo enc (textEncodingName utf8)
-        True -> pure $ ChangeFromTo enc (name ++ "//TRANSLIT")
+        True  -> pure $ ChangeFromTo enc (name ++ "//TRANSLIT")

@@ -1,38 +1,110 @@
-# SPDX-FileCopyrightText: 2021 Serokell <https://serokell.io/>
+# SPDX-FileCopyrightText: 2023 Serokell <https://serokell.io/>
 #
 # SPDX-License-Identifier: MPL-2.0
-
 {
-  description = "Get your UTF-8 IO right on the first try";
-
   nixConfig = {
     flake-registry = "https://github.com/serokell/flake-registry/raw/master/flake-registry.json";
   };
 
   inputs = {
-    nixpkgs.url = "github:serokell/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-compat = {
+      flake = false;
+    };
     haskell-nix = {
       inputs.hackage.follows = "hackage";
       inputs.stackage.follows = "stackage";
     };
-    hackage.flake = false;
-    stackage.flake = false;
+    hackage = {
+      flake = false;
+    };
+    stackage = {
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, serokell-nix, haskell-nix, hackage, stackage }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
+  outputs = { self, nixpkgs, haskell-nix, hackage, stackage, serokell-nix, flake-compat, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system}.extend haskell-nix.overlay;
+        haskellPkgs = haskell-nix.legacyPackages."${system}";
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            serokell-nix.overlay
+          ];
+        };
 
-        flake =
-          serokell-nix.lib.haskell.makeFlake pkgs.haskell-nix pkgs.haskell-nix.stackProject {
-            src = ./.;
-            ghcVersions = [ "884" "8107" "901" "921" ];
-            modules = [ serokell-nix.lib.haskell.ciBuildOptions ];
-          };
-      in flake // {
-          defaultPackage = flake.packages."with-utf8:lib:with-utf8";
-          defaultApp = flake.apps."with-utf8:exe:utf8-troubleshoot";
-        }
-    );
+        lib = pkgs.lib;
+
+        hs-package-name = "with-utf8";
+
+        ghc-versions = [ "884" "8107" "902" "926" "944" ];
+
+        # invoke haskell.nix for each ghc version listed in ghc-versions
+        pkgs-per-ghc = lib.genAttrs (map (v: "ghc${v}") ghc-versions)
+          (ghc: haskellPkgs.haskell-nix.cabalProject {
+            src = haskellPkgs.haskell-nix.haskellLib.cleanGit {
+              name = hs-package-name;
+              src = ./.;
+            };
+            compiler-nix-name = ghc;
+
+            # haskell.nix configuration
+            modules = [{
+              packages.${hs-package-name} = {
+                ghcOptions = [
+                  # fail on warnings
+                  "-Werror"
+                  # disable optimisations, we don't need them if we don't package or deploy the executable
+                  "-O0"
+                ];
+              };
+
+            }];
+          });
+
+        # returns the list of all components for a package
+        get-package-components = pkg:
+          # library
+          lib.optional (pkg ? library) pkg.library
+          # haddock
+          ++ lib.optional (pkg ? library) pkg.library.haddock
+          # exes, tests and benchmarks
+          ++ lib.attrValues pkg.exes
+          ++ lib.attrValues pkg.tests
+          ++ lib.attrValues pkg.benchmarks;
+
+        # all components for each specified ghc version
+        build-all = lib.mapAttrs'
+          (ghc: pkg:
+            let components = get-package-components pkg.${hs-package-name}.components;
+            in lib.nameValuePair "${ghc}:build-all"
+              (pkgs.linkFarmFromDrvs "build-all" components)) pkgs-per-ghc;
+
+        # all tests for each specified ghc version
+        test-all = lib.mapAttrs'
+          (ghc: pkg:
+            let tests = lib.filter lib.isDerivation
+              (lib.attrValues pkg.${hs-package-name}.checks);
+            in lib.nameValuePair "${ghc}:test-all"
+              (pkgs.linkFarmFromDrvs "test-all" tests)) pkgs-per-ghc;
+      in {
+        # nixpkgs revision pinned by this flake
+        legacyPackages = pkgs;
+
+        # used to dynamically build a matrix in the GitHub pipeline
+        ghc-matrix = {
+          include = map (ver: { ghc = ver; }) ghc-versions;
+        };
+
+        # derivations that we can run from CI
+        checks = build-all // test-all // {
+
+          trailing-whitespace = pkgs.build.checkTrailingWhitespace ./.;
+          reuse-lint = pkgs.build.reuseLint ./.;
+
+          hlint = pkgs.build.haskell.hlint ./.;
+          stylish-haskell = pkgs.build.haskell.stylish-haskell ./.;
+        };
+      });
 }
