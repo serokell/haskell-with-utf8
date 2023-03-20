@@ -3,8 +3,8 @@
  - SPDX-License-Identifier: MPL-2.0
  -}
 
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE LambdaCase          #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Test.Utf8.ReadWrite where
@@ -18,7 +18,7 @@ import Data.Text (Text)
 import GHC.IO.Encoding (utf8)
 import System.IO.Temp (withSystemTempFile)
 
-import Hedgehog (Property, (===), forAll, property)
+import Hedgehog (Property, forAll, property, (===))
 import Test.HUnit (Assertion, assertFailure)
 
 import qualified Data.Text.IO as T
@@ -59,7 +59,7 @@ hprop_readFile = property $ do
 hprop_writeFile :: Property
 hprop_writeFile = property $ do
     str <- forAll $ G.text (R.linear 0 1000) G.unicode
-    liftIO $ withTestFile str (flip Utf8.writeFile str)
+    liftIO $ withTestFile str (`Utf8.writeFile` str)
 
 hprop_openFile :: Property
 hprop_openFile = property $ do
@@ -78,6 +78,5 @@ hprop_withFile = property $ do
     str' <- liftIO $ withTestFile str $ \fp ->
       Utf8.withFile fp IO.ReadMode $ \h -> do
         res <- T.hGetContents h
-        res' <- evaluate . force $ res
-        pure res'
+        evaluate . force $ res
     str === str'

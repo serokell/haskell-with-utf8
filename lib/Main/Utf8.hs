@@ -62,7 +62,7 @@ withUtf8 act = withStdTerminalHandles $
   bracket
     (liftIO $ getLocaleEncoding <* setLocaleEncoding utf8)
     (liftIO . setLocaleEncoding)
-    (\_ -> act)
+    (const act)
 
 -- | Make standard handles safe to write anything to them.
 --

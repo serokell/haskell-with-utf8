@@ -37,7 +37,7 @@ ghc-options:
   - -Wredundant-constraints
 
 dependencies:
-  - base >= 4.10 && < 4.17
+  - base >= 4.10 && < 4.19
   - text >= 0.7 && < 2.1
 
 library:

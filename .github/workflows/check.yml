@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2023 Serokell <https://serokell.io/>
+#
+# SPDX-License-Identifier: MPL-2.0
+name: Nix flake check
+on: push
+
+jobs:
+  validate:
+    runs-on: [self-hosted, nix]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: xrefcheck
+        run: nix run github:serokell/xrefcheck
+
+      - name: reuse
+        run: nix build -L .#checks.x86_64-linux.reuse-lint
+        # Run step even if the previous one has failed
+        if: success() || failure()
+
+      - name: hlint
+        run: nix build -L .#checks.x86_64-linux.hlint
+        if: success() || failure()
+
+      - name: stylish-haskell
+        run: nix build -L .#checks.x86_64-linux.stylish-haskell
+        if: success() || failure()
+
+      - name: check-trailing-whitespace
+        run: nix build -L .#checks.x86_64-linux.trailing-whitespace
+        if: success() || failure()
+
+  # Export JSON serialized ghc-versions
+  ghc-versions:
+    runs-on: [self-hosted, nix]
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: set-matrix
+      run: echo "matrix=$(nix eval --json .#ghc-matrix.x86_64-linux)" >> $GITHUB_OUTPUT
+
+  build-and-test:
+    needs: ghc-versions
+    name: ghc${{ matrix.ghc }}
+    runs-on: [self-hosted, nix]
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.ghc-versions.outputs.matrix)}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: build
+        run: nix build -L .#checks.x86_64-linux.ghc${{ matrix.ghc }}:build-all --keep-going
+
+      - name: test
+        run: nix build -L .#checks.x86_64-linux.ghc${{ matrix.ghc }}:test-all --keep-going
+        if: success() || failure()
