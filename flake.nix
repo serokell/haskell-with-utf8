@@ -92,6 +92,10 @@
         # nixpkgs revision pinned by this flake
         legacyPackages = pkgs;
 
+        devShells.default = pkgs.mkShell {
+            buildInputs = [ pkgs.hpack ];
+          };
+
         # used to dynamically build a matrix in the GitHub pipeline
         ghc-matrix = {
           include = map (ver: { ghc = ver; }) ghc-versions;
@@ -105,6 +109,8 @@
 
           hlint = pkgs.build.haskell.hlint ./.;
           stylish-haskell = pkgs.build.haskell.stylish-haskell ./.;
+
+          hpack = pkgs.build.haskell.hpack ./.;
         };
       });
 }
