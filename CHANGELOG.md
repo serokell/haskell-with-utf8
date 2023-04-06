@@ -1,8 +1,14 @@
 # Changelog
 
 
-## Unreleased
+## 1.0.2.4
 
+### Changed
+
+- Allow base 4.17, 4.18 (GHC 9.4, 9.6).
+- Allow text<2.1
+
+## 1.0.2.2
 
 ## 1.0.2.3
 
