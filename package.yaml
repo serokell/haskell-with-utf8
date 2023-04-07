@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 name: with-utf8
-version: 1.0.2.3
+version: 1.0.2.4
 synopsis: Get your IO right on the first try
 description: |
   This minimalistic library helps you navigate the world of text encodings
