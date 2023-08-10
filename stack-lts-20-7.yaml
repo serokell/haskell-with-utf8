@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-resolver: lts-18.14
+resolver: lts-20.7
 packages:
   - with-utf8
   - test-package

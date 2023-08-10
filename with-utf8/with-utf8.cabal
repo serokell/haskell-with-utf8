@@ -1,4 +1,4 @@
-cabal-version: 1.18
+cabal-version: 1.12
 
 -- This file has been generated from package.yaml by hpack version 0.35.2.
 --
@@ -24,12 +24,9 @@ bug-reports:    https://github.com/serokell/haskell-with-utf8/issues
 author:         Kirill Elagin <kirelagin@serokell.io>
 maintainer:     Kirill Elagin <kirelagin@serokell.io>
 copyright:      2020 Serokell
-license:        MPL-2.0
-license-file:   LICENSES/MPL-2.0.txt
 build-type:     Simple
-extra-doc-files:
-    CHANGELOG.md
-    README.md
+tested-with:
+    GHC == 8.8.4, GHC == 8.10.7, GHC == 9.0.2
 
 source-repository head
   type: git

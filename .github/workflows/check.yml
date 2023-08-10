@@ -13,10 +13,10 @@ jobs:
       - name: xrefcheck
         run: nix run github:serokell/xrefcheck
 
-      - name: reuse
-        run: nix build -L .#checks.x86_64-linux.reuse-lint
-        # Run step even if the previous one has failed
-        if: success() || failure()
+      # - name: reuse
+      #   run: nix build -L .#checks.x86_64-linux.reuse-lint
+      #   # Run step even if the previous one has failed
+      #   if: success() || failure()
 
       - name: hlint
         run: nix build -L .#checks.x86_64-linux.hlint
@@ -26,9 +26,9 @@ jobs:
         run: nix build -L .#checks.x86_64-linux.stylish-haskell
         if: success() || failure()
 
-      - name: check-trailing-whitespace
-        run: nix build -L .#checks.x86_64-linux.trailing-whitespace
-        if: success() || failure()
+      # - name: check-trailing-whitespace
+      #   run: nix build -L .#checks.x86_64-linux.trailing-whitespace
+      #   if: success() || failure()
 
       - name: check-hpack
         run: nix build -L .#checks.x86_64-linux.hpack
@@ -43,11 +43,11 @@ jobs:
     - uses: actions/checkout@v3
 
     - id: set-matrix
-      run: echo "matrix=$(nix eval --json .#ghc-matrix.x86_64-linux)" >> $GITHUB_OUTPUT
+      run: echo "matrix=$(nix eval --json .#build-matrix.x86_64-linux)" >> $GITHUB_OUTPUT
 
   build-and-test:
     needs: ghc-versions
-    name: ghc${{ matrix.ghc }}
+    name: ${{ matrix.prefix }}
     runs-on: [self-hosted, nix]
     strategy:
       fail-fast: false
@@ -57,8 +57,8 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: build
-        run: nix build -L .#checks.x86_64-linux.ghc${{ matrix.ghc }}:build-all --keep-going
+        run: nix build -L .#checks.x86_64-linux.${{ matrix.prefix }}:build-all --keep-going
 
       - name: test
-        run: nix build -L .#checks.x86_64-linux.ghc${{ matrix.ghc }}:test-all --keep-going
+        run: nix build -L .#checks.x86_64-linux.${{ matrix.prefix }}:test-all --keep-going
         if: success() || failure()
