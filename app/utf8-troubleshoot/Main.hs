@@ -70,10 +70,10 @@ showSystem = do
     showEnvVar "TERM"
 
     -- Nix stuff
-    let builtNix = isJust ($$(envQ @String "NIX_BUILD_TOP"))
+    let builtNix = isJust $$(envQ @String "NIX_BUILD_TOP")
     when builtNix $ do
       putStrLn "  * Built with Nix"
-    let builtNixShell = isJust ($$(envQ @String "IN_NIX_SHELL"))
+    let builtNixShell = isJust $$(envQ @String "IN_NIX_SHELL")
     when builtNixShell $ do
       putStrLn "  * Built in nix-shell"
     inNixShell <- isJust <$> lookupEnv "IN_NIX_SHELL"
