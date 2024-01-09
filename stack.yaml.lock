@@ -3,38 +3,10 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages:
-- completed:
-    hackage: th-env-0.1.0.3@sha256:3804eeff3edf8b4c3c6ca68a8b4eff3bf23c07c468c699e3f010c4dec1603830,1386
-    pantry-tree:
-      size: 370
-      sha256: f14846f743126dde54c05cb7eb3038b059bec372532582858ca982bdebef0bad
-  original:
-    hackage: th-env-0.1.0.3
-- completed:
-    hackage: constraints-0.13.1@sha256:3d2002767a32e0c0ea156276c34de926875817c4db385d8e75776b6e35b0267d,2396
-    pantry-tree:
-      size: 867
-      sha256: a4d80e46d52971b0f74051c3cc2a7e87408b6e1e19b5fb4814360441c9e524a0
-  original:
-    hackage: constraints-0.13.1
-- completed:
-    hackage: hashable-1.3.5.0@sha256:47d1232d9788bb909cfbd80618de18dcdfb925609593e202912bd5841db138c1,4193
-    pantry-tree:
-      size: 1248
-      sha256: adde5ecc080faa094750544837937cf876e65bf5bf28d81db22e7401faa46bf3
-  original:
-    hackage: hashable-1.3.5.0
-- completed:
-    hackage: random-1.2.1@sha256:8bee24dc0c985a90ee78d94c61f8aed21c49633686f0f1c14c5078d818ee43a2,6598
-    pantry-tree:
-      size: 1528
-      sha256: 8bdc994ce41f43624ab42302a881fe5a0f81d965f5d238841e24943664681a06
-  original:
-    hackage: random-1.2.1
+packages: []
 snapshots:
 - completed:
-    size: 586069
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/14.yaml
-    sha256: 87842ecbaa8ca9cee59a7e6be52369dbed82ed075cb4e0d152614a627e8fd488
-  original: lts-18.14
+    sha256: 90e6fcdcf6706918ef022ab01214828c550ee637a2d50f4fe96b15742b8bced1
+    size: 714102
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/22/5.yaml
+  original: lts-22.5
