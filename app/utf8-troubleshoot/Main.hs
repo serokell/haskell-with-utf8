@@ -40,6 +40,8 @@ import Data.Semigroup ((<>))
 
 import qualified Prelude as P
 
+-- See https://github.com/ndmitchell/hlint/commit/505a4d57b972f3ba605ad7a59721cef1f3d98a84
+{-# ANN module "HLint: ignore Unused LANGUAGE pragma" #-}
 
 -- | Encode a 'String' to be safe to print in ASCII-only.
 protect :: String -> String
@@ -70,10 +72,10 @@ showSystem = do
     showEnvVar "TERM"
 
     -- Nix stuff
-    let builtNix = isJust ($$(envQ @String "NIX_BUILD_TOP"))
+    let builtNix = isJust $$(envQ @String "NIX_BUILD_TOP")
     when builtNix $ do
       putStrLn "  * Built with Nix"
-    let builtNixShell = isJust ($$(envQ @String "IN_NIX_SHELL"))
+    let builtNixShell = isJust $$(envQ @String "IN_NIX_SHELL")
     when builtNixShell $ do
       putStrLn "  * Built in nix-shell"
     inNixShell <- isJust <$> lookupEnv "IN_NIX_SHELL"

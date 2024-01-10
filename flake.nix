@@ -38,7 +38,7 @@
 
         hs-package-name = "with-utf8";
 
-        ghc-versions = [ "884" "8107" "902" "926" "944" ];
+        ghc-versions = [ "884" "8107" "902" "928" "948" ];
 
         # invoke haskell.nix for each ghc version listed in ghc-versions
         pkgs-per-ghc = lib.genAttrs (map (v: "ghc${v}") ghc-versions)
