@@ -8,6 +8,10 @@
 {-# LANGUAGE PackageImports      #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
+-- Due to our Data.Text.IO.Utf8 which is deprecated and
+-- will be removed later.
+{-# OPTIONS_GHC -fno-warn-deprecations #-}
+
 module Test.Utf8.ReadWrite where
 
 import Control.DeepSeq (force)
