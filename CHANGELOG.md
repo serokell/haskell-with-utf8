@@ -1,6 +1,14 @@
 # Changelog
 
 
+## 1.1.0.0
+
+### Changed
+
+- Allow newer versions of base and text to support GHC up to 9.8.
+- Deprecate Data.Text.IO.Utf8.
+
+
 ## 1.0.2.4
 
 ### Changed
@@ -8,7 +16,6 @@
 - Allow base 4.17, 4.18 (GHC 9.4, 9.6).
 - Allow text<2.1
 
-## 1.0.2.2
 
 ## 1.0.2.3
 
