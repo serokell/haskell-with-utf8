@@ -8,6 +8,7 @@
 -- Wrappers around simple file reading/writing functions from the
 -- @text@ package that reset the handle encoding to UTF-8.
 module Data.Text.IO.Utf8
+  {-# DEPRECATED "Use Data.Text.IO.Utf8 from the text package instead" #-}
   ( readFile
   , writeFile
   ) where

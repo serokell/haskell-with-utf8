@@ -45,10 +45,12 @@ error due to encoding issues.
 If you are going to read a text file (to be precise, if you are going to open
 a file in text mode), you’ll probably use `withFile`, `openFile`, or `readFile`.
 Grab the first two from `System.IO.Utf8` or the latter from `Data.Text.IO.Utf8`.
+Starting from `text-2.1`, `Data.Text.IO.Utf8` is available in the `text` package
+itself, hence this module in `with-utf8` is now deprecated.
 
 _Note: it is best to import these modules qualified._
 
-_Note: there is no `System.IO.Utf8.readFile` because it’s 2020 and
+_Note: there is no `System.IO.Utf8.readFile` because it’s 2024 and
 you should not read `String`s from files._
 
 All these functions will make sure that the content will be treated as if it
@@ -72,6 +74,8 @@ doSomethingWithAFile h = Utf8.withhandle h $ do
 When writing a file either open it using `withFile`/`openFile` from
 `System.IO.Utf8` or write to it directly with `writeFile` from
 `Data.Text.IO.Utf8`.
+Starting from `text-2.1`, `Data.Text.IO.Utf8` is available in the `text` package
+itself, hence this module in `with-utf8` is now deprecated.
 
 _Note: it is best to import these modules qualified._
 

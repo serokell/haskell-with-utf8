@@ -2,20 +2,5 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-resolver: lts-18.14
+resolver: lts-22.5
 packages: [.]
-
-extra-deps:
-  # Required for GHC >= 9
-  - th-env-0.1.0.3
-
-  # Required for GHC >= 9.2
-  - constraints-0.13.1
-  - hashable-1.3.5.0
-  - random-1.2.1
-
-  # text-2.0
-  #- hashable-1.4.0.1
-  #- text-2.0
-
-#allow-newer: true  # text-2.0: some of our deps (incorrectly) say they don’t like it
