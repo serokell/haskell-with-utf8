@@ -93,8 +93,11 @@
         legacyPackages = pkgs;
 
         devShells.default = pkgs.mkShell {
-            buildInputs = [ pkgs.hpack ];
-          };
+            buildInputs = [ pkgs.hpack pkgs.curl ];
+        };
+        devShells.ci = pkgs.mkShell {
+          buildInputs = [ pkgs.cabal-install pkgs.ghc pkgs.curl ];
+        };
 
         # used to dynamically build a matrix in the GitHub pipeline
         ghc-matrix = {

@@ -5,60 +5,40 @@ name: Nix flake check
 on: push
 
 jobs:
-  validate:
-    runs-on: [self-hosted, nix]
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: xrefcheck
-        run: nix run github:serokell/xrefcheck
-
-      - name: reuse
-        run: nix build -L .#checks.x86_64-linux.reuse-lint
-        # Run step even if the previous one has failed
-        if: success() || failure()
-
-      - name: hlint
-        run: nix build -L .#checks.x86_64-linux.hlint
-        if: success() || failure()
-
-      - name: stylish-haskell
-        run: nix build -L .#checks.x86_64-linux.stylish-haskell
-        if: success() || failure()
-
-      - name: check-trailing-whitespace
-        run: nix build -L .#checks.x86_64-linux.trailing-whitespace
-        if: success() || failure()
-
-      - name: check-hpack
-        run: nix build -L .#checks.x86_64-linux.hpack
-        if: success() || failure()
-
-  # Export JSON serialized ghc-versions
-  ghc-versions:
+  check-outdated:
     runs-on: [self-hosted, nix]
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-    - uses: actions/checkout@v4
-
-    - id: set-matrix
-      run: echo "matrix=$(nix eval --json .#ghc-matrix.x86_64-linux)" >> $GITHUB_OUTPUT
-
-  build-and-test:
-    needs: ghc-versions
-    name: ghc${{ matrix.ghc }}
-    runs-on: [self-hosted, nix]
-    strategy:
-      fail-fast: false
-      matrix: ${{fromJson(needs.ghc-versions.outputs.matrix)}}
-
+      msg: ${{ steps.outdated.outputs.outdated }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: build
-        run: nix build -L .#checks.x86_64-linux.ghc${{ matrix.ghc }}:build-all --keep-going
+      - name: check outdated packages
+        id: outdated
+        run: |
+          function output {
+            echo "outdated<<EOF" >> $GITHUB_OUTPUT
+            echo "Repository https://github.com/${{ github.repository }} has outdated haskell dependencies" >> $GITHUB_OUTPUT
+            echo "$msg" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          }
 
-      - name: test
-        run: nix build -L .#checks.x86_64-linux.ghc${{ matrix.ghc }}:test-all --keep-going
-        if: success() || failure()
+          nix develop .#ci -c cabal update
+          trap 'output' ERR
+          msg=$(nix develop .#ci -c cabal outdated --exit-code)
+
+  report-outdated:
+    runs-on: [self-hosted, nix]
+    if: failure()
+    needs: check-outdated
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Report outdated haskell dependencies
+        env:
+          MSG: ${{needs.check-outdated.outputs.msg}}
+        run: |
+          # you can change 'libraries' to the channel dedicated to the library, if there is one
+          nix develop .#ci -c curl -XPOST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer ${{ env.SLACK_TOKEN }}" \
+            -d "channel=libraries" \
+            -d "text=$MSG"
