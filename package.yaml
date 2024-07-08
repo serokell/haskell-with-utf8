@@ -37,7 +37,7 @@ ghc-options:
   - -Wredundant-constraints
 
 dependencies:
-  - base >= 4.10 && < 4.20
+  - base >= 4.10 && < 4.21
   - text >= 0.7 && < 2.2
 
 library:
@@ -55,7 +55,7 @@ executables:
 
     dependencies:
       - directory >= 1.2.5.0 && < 1.4
-      - filepath >= 1.0 && < 1.5
+      - filepath >= 1.0 && < 1.6
       - process >= 1.0.1.1 && < 1.7
       - safe-exceptions
       - th-env >= 0.1.0.0 && < 0.2
